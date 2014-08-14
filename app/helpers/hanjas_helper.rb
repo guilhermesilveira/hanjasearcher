@@ -1,0 +1,2 @@
+module HanjasHelper
+end

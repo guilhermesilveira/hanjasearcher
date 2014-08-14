@@ -1,0 +1,46 @@
+<h1>Listing hanjas</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @hanjas.each do |hanja| %>
+      <tr>
+        <td><%= hanja.name %></td>
+        <td><%= link_to 'Show', hanja %></td>
+        <td><%= link_to 'Edit', edit_hanja_path(hanja) %></td>
+        <td><%= link_to 'Destroy', hanja, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Hanja', new_hanja_path %>
+
+<h1>Combinations</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @combinations.each do |hanja| %>
+      <tr>
+        <td><a href="http://hanja.naver.com/word?q=<%=hanja.encoded%>"><%= hanja.name %></a></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
