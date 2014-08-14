@@ -25,14 +25,35 @@ class HanjasController < ApplicationController
   # POST /hanjas
   # POST /hanjas.json
   def create
-    @hanja = Hanja.new(hanja_params)
-
-      if @hanja.save
-        @hanja.search
-        redirect_to new_hanja_url
-      else
-        render :new
+    if params[:names]
+      params[:names].split("\n").each do |line|
+        if line.size > 0
+          names = line.split(",")[0]
+          names.split(//).each do |name|
+            @hanja = Hanja.find_by_name(name)
+            if !@hanja
+              @hanja = Hanja.new(name: name)
+              if @hanja.save
+                @hanja.search
+              end
+            end
+          end
+        end
       end
+      redirect_to new_hanja_url
+      return
+    end
+
+    if(params[:name])
+      @hanja = Hanja.new(hanja_params)
+
+        if @hanja.save
+          @hanja.search
+          redirect_to new_hanja_url
+        else
+          render :new
+        end
+    end
   end
 
   # PATCH/PUT /hanjas/1

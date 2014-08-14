@@ -14,6 +14,10 @@ private
 		result = Net::HTTP.get('hanja.naver.com', "/hanja/idiom?q=#{encoded}#{params}")
 		page = Nokogiri::HTML(result)   
 		word_list = page.css(".word_list")[0]
+		if !word_list
+			puts "nothing found for #{name}"
+			return
+		end
 		Hanja.study(word_list)
 		if !deep
 			return
